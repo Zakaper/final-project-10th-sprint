@@ -7,10 +7,9 @@
 #   dir3
 #       dir4
 
-mkdir -p task/dir1 task/dir2 task/dir3 task/dir4
+mkdir -p task/dir1 task/dir2 task/dir3/dir4
 # изменяем текущую директорию на task
 cd [task]
-pwd 
 
 # создаём пустой файл task/dir2/empty
 
@@ -19,7 +18,10 @@ touch /task/dir2/empty
 # создаём файл task/dir2/hello.sh с таким содержанием:
 # #!/bin/bash
 # echo "$1, привет!"
-echo 'Всем студентам, привет!' > /task/dir2/hello.sh
+
+#!/bin/bash
+echo "$1, привет!" > /task/dir2/hello.sh
+
 # устанавливаем для task/dir2/hello.sh права rwxrw-r--
 chmod 764 -rwxrw-r-- /task/dir2/hello.sh
 
@@ -34,14 +36,14 @@ cp -r  /task/dir2 task/dir3/dir4
 find --name /task/*.txt /task/dir1/summary.txt 
 
 # дописываем в task/dir1/summary.txt содержимое task/dir2/list.txt
-mv /task/dir2/list.txt /task/dir1/summary.txt
+cat /task/dir2/list.txt /task/dir1/summary.txt
 
 # определяем переменную окружения NAME со значением "Всем студентам"
-alias --NAME="Всем студентам"
+export --NAME="Всем студентам"
 
 # запускаем task/dir2/hello.sh с переменной окружения NAME в качестве аргумента
 # вывод скрипта должен дописаться в файл task/dir1/summary.txt
-cat --NAME /task/dir2/hello.sh /task/dir1/summary.txt
+exec --NAME /task/dir2/hello.sh /task/dir1/summary.txt
 # перемещаем с переименованием task/dir1/summary.txt в task/Практическое задание
 mv /task/dir1/summary.txt /task/Практическое задание
 # выводим на консоль содержимое файла task/Практическое задание
